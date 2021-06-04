@@ -2542,7 +2542,142 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 # 18 "Proyecto2.c" 2
-# 30 "Proyecto2.c"
+
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 1 3
+# 13 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int8_t;
+
+
+
+
+
+
+typedef signed int int16_t;
+
+
+
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
+
+
+
+typedef signed long int int32_t;
+# 52 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint8_t;
+
+
+
+
+
+typedef unsigned int uint16_t;
+
+
+
+
+
+
+typedef __uint24 uint24_t;
+
+
+
+
+
+
+typedef unsigned long int uint32_t;
+# 88 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_least8_t;
+
+
+
+
+
+
+
+typedef signed int int_least16_t;
+# 109 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_least24_t;
+# 118 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed long int int_least32_t;
+# 136 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_least8_t;
+
+
+
+
+
+
+typedef unsigned int uint_least16_t;
+# 154 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_least24_t;
+
+
+
+
+
+
+
+typedef unsigned long int uint_least32_t;
+# 181 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef signed char int_fast8_t;
+
+
+
+
+
+
+typedef signed int int_fast16_t;
+# 200 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __int24 int_fast24_t;
+
+
+
+
+
+
+
+typedef signed long int int_fast32_t;
+# 224 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef unsigned char uint_fast8_t;
+
+
+
+
+
+typedef unsigned int uint_fast16_t;
+# 240 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef __uint24 uint_fast24_t;
+
+
+
+
+
+
+typedef unsigned long int uint_fast32_t;
+# 268 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef int32_t intmax_t;
+# 282 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\stdint.h" 3
+typedef uint32_t uintmax_t;
+
+
+
+
+
+
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 19 "Proyecto2.c" 2
+# 31 "Proyecto2.c"
 #pragma config FOSC = INTRC_NOCLKOUT
 
 
@@ -2578,25 +2713,25 @@ int flag = 1;
 unsigned char opcion=0;
 unsigned char temp_posicion1;
 unsigned char temp_posicion2;
-unsigned char leer_EEPROM = 0x10;
-int valor_pot;
-int var_temp;
-int centenas;
-int decenas;
-int decenas_temp;
-int unidades;
+uint8_t valor_pot;
+uint8_t var_temp;
+uint8_t centenas;
+uint8_t decenas;
+uint8_t decenas_temp;
+uint8_t unidades;
 int RB3_old;
-int eepromVal;
-int addressEEPROM = 0x10;
-int parpadear = 0;
+unsigned char read_EEPROM = 0x10;
+uint8_t eepromVal;
+uint8_t addressEEPROM = 0x10;
 
 
 
 
 void setup(void);
 void String_Completo(char *var);
-void writeToEEPROM(int data, int address);
-int decimal(int val);
+void writeToEEPROM(uint8_t data, uint8_t address);
+uint8_t readFromEEPROM(uint8_t address);
+uint8_t decimal(uint8_t val);
 
 
 
@@ -2621,7 +2756,6 @@ void main(void) {
 
 
         if (PIR1bits.TXIF){
-
             if(flag){
                 String_Completo("Si desea ingresar a modo control USART presione 1");
                 flag = 0;
@@ -2643,7 +2777,9 @@ void main(void) {
                         }
                         if(opcion==49){
                             String_Completo("Elija la posicion del primer servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            String_Completo("(1) 0 [grados]");
+                            String_Completo("(2) 90 [grados]");
+                            String_Completo("(3) 180 [grados]");
                             flag = 1;
                             opcion = 0;
 
@@ -2669,7 +2805,9 @@ void main(void) {
                             }
 
                             String_Completo("Elija la posicion del segundo servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            String_Completo("(1) 0 [grados]");
+                            String_Completo("(2) 90 [grados]");
+                            String_Completo("(3) 180 [grados]");
                             flag = 1;
                             opcion = 0;
 
@@ -2720,12 +2858,12 @@ void main(void) {
                             }
                             if(opcion == 49) {
                                 PORTA = 8;
-                                _delay((unsigned long)((5000)*(8000000/4000.0)));
+                                _delay((unsigned long)((3000)*(8000000/4000.0)));
                                 PORTA = 0;
                             }
                             if(opcion == 50) {
                                PORTA = 4;
-                               _delay((unsigned long)((5000)*(8000000/4000.0)));
+                               _delay((unsigned long)((3000)*(8000000/4000.0)));
                                PORTA = 0;
                             }
                             opcion = 0;
@@ -2746,24 +2884,29 @@ void main(void) {
                                 PORTA = 0;
                                 PORTAbits.RA4 = 1;
                                 PORTAbits.RA5 = 1;
+                                PORTA = 0;
                             }
                             if(opcion == 50){
                                 PORTA = 0;
                                 PORTAbits.RA6 = 1;
                                 PORTAbits.RA7 = 1;
+                                PORTA = 0;
                             }
                             if(opcion == 51){
                                 PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0;
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0;
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0;
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
+                                _delay((unsigned long)((500)*(8000000/4000.0)));
                                 PORTA = 0;
                             }
                             opcion = 0;
@@ -2784,7 +2927,7 @@ void main(void) {
                             decenas = decenas_temp/10;
                             unidades = var_temp%10;
 
-                            String_Completo("El valor en decimal del pot es:");
+                            String_Completo("Valor del potenciometro:");
                             TXREG = decimal(centenas);
                             _delay((unsigned long)((10)*(8000000/4000.0)));
                             TXREG = decimal(decenas);
@@ -2801,14 +2944,36 @@ void main(void) {
                     }
 
                     if(opcion==53){
-                       String_Completo("Ingrese 1 si desea ingresar a modo control USART");
+                       String_Completo("Si desea ingresar a modo control USART presione 1");
                        flag = 0;
                     }
                 }
         }
 
+        if (PORTBbits.RB4 == 0){
+            RB3_old = 1;
+        }
+
+        if(PORTBbits.RB4 == 1 && RB3_old==1){
+            eepromVal = temp_posicion1;
+            writeToEEPROM(eepromVal,addressEEPROM);
+            if(addressEEPROM == 0x17){
+                addressEEPROM = 0x10;
+            }else{
+                addressEEPROM = addressEEPROM + 1;
+            }
+            _delay((unsigned long)((10)*(8000000/4000.0)));
+            eepromVal = temp_posicion2;
+            writeToEEPROM(eepromVal,addressEEPROM);
+            if(addressEEPROM == 0x17){
+                addressEEPROM = 0x10;
+            }else{
+                addressEEPROM = addressEEPROM + 1;
+            }
+            RB3_old = 0;
+        }
+    }
     return;
-}
 }
 
 
@@ -2824,16 +2989,17 @@ void __attribute__((picinterrupt(("")))) isr(void){
 
         if(ADCON0bits.CHS == 5) {
             PORTD = ADRESH;
+            temp_posicion1 = PORTD;
             CCPR1L = (PORTD>>1) + 128;
             CCP1CONbits.DC1B1 = PORTDbits.RD0;
             CCP1CONbits.DC1B0 = ADRESL>>7;}
 
-        else{
+        else if(ADCON0bits.CHS == 6){
             PORTD = ADRESH;
+            temp_posicion2 = PORTD;
             CCPR2L = (PORTD>>1) + 128;
             CCP2CONbits.DC2B1 = PORTDbits.RD0;
             CCP2CONbits.DC2B0 = ADRESL>>7;}
-
         PIR1bits.ADIF = 0;
     }
 
@@ -2881,6 +3047,36 @@ void __attribute__((picinterrupt(("")))) isr(void){
             flag2 = 0;
         }
 
+        if(PORTBbits.RB5 == 0){
+
+            PORTD = readFromEEPROM(read_EEPROM);
+
+            if(read_EEPROM == 0x17){
+                    read_EEPROM = 0x10;
+            }else{
+                read_EEPROM++;
+            }
+
+            CCPR1L = (PORTD>>1) + 120;
+            CCP1CONbits.DC1B1 = PORTDbits.RD0;
+            CCP1CONbits.DC1B0 = ADRESL>>7;
+
+            _delay((unsigned long)((10)*(8000000/4000.0)));
+
+            PORTD = readFromEEPROM(read_EEPROM);
+
+            if(read_EEPROM == 0x17){
+                    read_EEPROM = 0x10;
+            }else{
+                read_EEPROM++;
+            }
+
+            CCPR2L = (PORTD>>1) + 128;
+            CCP2CONbits.DC2B1 = PORTDbits.RD0;
+            CCP2CONbits.DC2B0 = ADRESL>>7;
+            _delay((unsigned long)((5000)*(8000000/4000.0)));
+    }
+
     INTCONbits.RBIF = 0;
 }
  return;
@@ -2889,7 +3085,7 @@ void __attribute__((picinterrupt(("")))) isr(void){
 
 
 
-int decimal(int val){
+uint8_t decimal(uint8_t val){
     if(val==0){
         return 48;
     }else if(val==1){
@@ -2924,6 +3120,34 @@ void String_Completo(char *var){
     TXREG = 11;
 }
 
+void writeToEEPROM(uint8_t data, uint8_t address){
+    EEADR = address;
+    EEDAT = data;
+    EECON1bits.EEPGD = 0;
+    EECON1bits.WREN = 1;
+
+
+    INTCONbits.GIE = 0;
+    EECON2 = 0x55;
+    EECON2 = 0xAA;
+
+    EECON1bits.WR = 1;
+
+
+    EECON1bits.WREN = 0;
+    INTCONbits.GIE = 1;
+    return;
+}
+
+
+uint8_t readFromEEPROM(uint8_t address){
+ EEADR = address;
+ EECON1bits.EEPGD = 0;
+ EECON1bits.RD = 1;
+ uint8_t data = EEDATA;
+ return data;
+}
+
 
 
 
@@ -2937,19 +3161,19 @@ void setup(){
 
 
     ANSELH = 0x00;
-    ANSEL = 0X70;
+    ANSEL = 0XE0;
 
     TRISA = 0x00;
     TRISB = 0xFF;
     TRISC = 0xB9;
     TRISD = 0x00;
-    TRISE = 0x03;
+    TRISE = 0x07;
 
     OPTION_REGbits.nRBPU = 0 ;
     WPUB = 0xFF;
 
     PORTA = 0x00;
-    PORTB = 0x0F;
+    PORTB = 0xFF;
     PORTC = 0x00;
     PORTD = 0x00;
     PORTE = 0x00;
@@ -3013,7 +3237,7 @@ void setup(){
     PIR1bits.RCIF = 0;
 
 
-    IOCB = 0x0F;
+    IOCB = 0xFF;
     INTCONbits.RBIF = 0;
 
     return;

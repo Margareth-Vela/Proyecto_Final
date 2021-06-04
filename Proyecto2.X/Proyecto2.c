@@ -16,6 +16,7 @@
 //------------------------------------------------------------------------------    
 #include <xc.h>
 #include <string.h>
+#include <stdint.h>
 #include <pic16f887.h>
 
 //------------------------------------------------------------------------------
@@ -57,30 +58,30 @@
 //------------------------------------------------------------------------------
 //                          Variables
 //------------------------------------------------------------------------------
-int flag2 = 0;
-int flag = 1; //bandera de menu con valor inicial 1
+int flag2 = 0; //bandera para motor DC
+int flag = 1; //bandera de menu USART
 unsigned char opcion=0; // opcion ingresada por el usuario
-unsigned char temp_posicion1;
-unsigned char temp_posicion2;
-unsigned char leer_EEPROM = 0x10;
-int valor_pot;
-int var_temp;
-int centenas;
-int decenas;
-int decenas_temp;
-int unidades;
-int RB3_old;
-int eepromVal;
-int addressEEPROM = 0x10;
-int parpadear = 0;
+unsigned char temp_posicion1; //posicion temporal del servo 1
+unsigned char temp_posicion2; //posicion temporal del servo 2
+uint8_t valor_pot; //Para mostrar valor del potenciometro
+uint8_t var_temp; //Para conversion a decimal
+uint8_t centenas; 
+uint8_t decenas;
+uint8_t decenas_temp;
+uint8_t unidades;
+int RB3_old; //Antirebote
+unsigned char read_EEPROM = 0x10; //valor de direccion de EEPROM
+uint8_t eepromVal; //Valor a ingresar a la EEPROM
+uint8_t addressEEPROM = 0x10; //valor de direccion de EEPROM
 
 //------------------------------------------------------------------------------
 //                          Prototipos
 //------------------------------------------------------------------------------
-void setup(void);
-void String_Completo(char *var);// funcion para cadena de strings
-void writeToEEPROM(int data, int address);
-int decimal(int val);
+void setup(void); //Configuraciones
+void String_Completo(char *var);//Cadena de strings
+void writeToEEPROM(uint8_t data, uint8_t address); //Escribir en EEPROM
+uint8_t readFromEEPROM(uint8_t address); //Leer en EEPROM
+uint8_t decimal(uint8_t val); //Para convertir en decimal
 
 //------------------------------------------------------------------------------
 //                          Código Principal
@@ -104,14 +105,13 @@ void main(void) {
         }
         
         //Módulo EUSART
-        if (PIR1bits.TXIF){
-            
-            if(flag){
+        if (PIR1bits.TXIF){     
+            if(flag){ //Menu para entrar al modo control USART
                 String_Completo("Si desea ingresar a modo control USART presione 1");
                 flag = 0;
             }
             
-            if(opcion == 49){
+            if(opcion == 49){//Entra a modo control USART
                 flag = 1;
                 opcion = 0;
                     while(opcion != 53){
@@ -125,9 +125,11 @@ void main(void) {
                             String_Completo("(5)Salir de control por USART");
                             flag = 0;
                         }
-                        if(opcion==49){ // cuando seleccione opcion 1 mostrara el texto 
+                        if(opcion==49){ //Para controlar los servomotores
                             String_Completo("Elija la posicion del primer servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            String_Completo("(1) 0 [grados]");
+                            String_Completo("(2) 90 [grados]");
+                            String_Completo("(3) 180 [grados]");
                             flag = 1;
                             opcion = 0;
 
@@ -153,7 +155,9 @@ void main(void) {
                             }
 
                             String_Completo("Elija la posicion del segundo servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            String_Completo("(1) 0 [grados]");
+                            String_Completo("(2) 90 [grados]");
+                            String_Completo("(3) 180 [grados]");
                             flag = 1;
                             opcion = 0;
 
@@ -179,7 +183,7 @@ void main(void) {
                             }
                             opcion = 0;
                         }
-                        
+
                         if(opcion==50){ // Controlar carro
                             String_Completo("Elija una de las siguientes acciones:");
                             String_Completo("(1) Avanzar");
@@ -196,7 +200,7 @@ void main(void) {
                                     __delay_ms(250);
                                     PORTA = 0;                                    
                             }
-        
+
                             if(opcion == 51) { //Primer motor DC -> derecha
                                     PORTA = 1;
                                     __delay_ms(250);
@@ -214,7 +218,7 @@ void main(void) {
                             }                          
                             opcion = 0;
                         }
-                        
+
                         if (opcion==51){ //Controlar luces
                             String_Completo("Elija una de las siguientes acciones:");
                             String_Completo("(1) Encender luces delanteras");
@@ -225,29 +229,34 @@ void main(void) {
                             opcion = 0;
 
                             while(!opcion){}
-                            
+
                             if(opcion == 49){
                                 PORTA = 0;
                                 PORTAbits.RA4 = 1;
                                 PORTAbits.RA5 = 1;
+                                PORTA = 0;
                             }
                             if(opcion == 50){
                                 PORTA = 0;
                                 PORTAbits.RA6 = 1;
                                 PORTAbits.RA7 = 1;
+                                PORTA = 0;
                             }
                             if(opcion == 51){
                                 PORTA = 0xF0;
-                                __delay_ms(2000);
+                                __delay_ms(500);
                                 PORTA = 0;
+                                __delay_ms(500);
                                 PORTA = 0xF0;
-                                __delay_ms(2000);
+                                __delay_ms(500);
                                 PORTA = 0;
+                                __delay_ms(500);
                                 PORTA = 0xF0;
-                                __delay_ms(2000);
+                                __delay_ms(500);
                                 PORTA = 0;
+                                __delay_ms(500);
                                 PORTA = 0xF0;
-                                __delay_ms(2000);
+                                __delay_ms(500);
                                 PORTA = 0;
                             }      
                             opcion = 0;
@@ -255,44 +264,66 @@ void main(void) {
 
                         if (opcion==52){ //Muestra el valor del POT3
                             flag = 1;                           
-                            ADCON0bits.CHS = 7;
+                            ADCON0bits.CHS = 7; //Ingresa al canal del POT3
                             __delay_us(50);
                             ADCON0bits.GO = 1; //Se vuelve a ejecutar la conversión ADC
                             __delay_us(50); //Delay para el capacitor sample/hold
                             valor_pot = ADRESH;
                             __delay_us(50);
-                            
+
                             var_temp = valor_pot;
                             centenas = var_temp/100; //Se divide por 100 para obtener las centenas
                             decenas_temp = var_temp%100;//El residuo se almacena en la variable temporal de decenas
                             decenas = decenas_temp/10;//Se divide en 10 el valor de decenas_temp 
                             unidades = var_temp%10;//El residuo se almacena en unidades 
-                            
-                            String_Completo("El valor en decimal del pot es:");
+
+                            String_Completo("Valor del potenciometro:");
                             TXREG = decimal(centenas);
                             __delay_ms(10);
                             TXREG = decimal(decenas);
                             __delay_ms(10);
                             TXREG = decimal(unidades);
                             __delay_ms(10);
-                            
+
                             TXREG = 13;
                             __delay_ms(10);
                             TXREG = 11;
-                            
+
                             opcion = 0;
                         } 
                     }
-                    
+
                     if(opcion==53){
-                       String_Completo("Ingrese 1 si desea ingresar a modo control USART");
+                       String_Completo("Si desea ingresar a modo control USART presione 1");
                        flag = 0;
                     }   
-                }          
+                }         
         }
     
+        if (PORTBbits.RB4 == 0){ //Funciona para antirebote
+            RB3_old = 1;
+        }
+        
+        if(PORTBbits.RB4 == 1 && RB3_old==1){
+            eepromVal = temp_posicion1;  //Valor del primer servo         
+            writeToEEPROM(eepromVal,addressEEPROM); //Se escribe en la EEPROM            
+            if(addressEEPROM == 0x17){ 
+                addressEEPROM = 0x10;
+            }else{
+                addressEEPROM = addressEEPROM + 1;
+            }           
+            __delay_ms(10);
+            eepromVal = temp_posicion2; //Valor del segundo servo           
+            writeToEEPROM(eepromVal,addressEEPROM); //Se escribe en la EEPROM           
+            if(addressEEPROM == 0x17){
+                addressEEPROM = 0x10;
+            }else{
+                addressEEPROM = addressEEPROM + 1;
+            }            
+            RB3_old = 0;
+        }
+    }
     return;
-}
 }
 
 //------------------------------------------------------------------------------
@@ -306,29 +337,30 @@ void __interrupt() isr(void){
 
     if (PIR1bits.ADIF){
                
-        if(ADCON0bits.CHS == 5) { //Verifica el canal en l que se encuentra
+        if(ADCON0bits.CHS == 5) { //Entra al canal 1
             PORTD = ADRESH;
+            temp_posicion1 = PORTD;
             CCPR1L = (PORTD>>1) + 128; //Swift y ajuste de señal
             CCP1CONbits.DC1B1 = PORTDbits.RD0;
             CCP1CONbits.DC1B0 = ADRESL>>7;}
         
-        else{
+        else if(ADCON0bits.CHS == 6){ //Entra al canal 2
             PORTD = ADRESH;
+            temp_posicion2 = PORTD;
             CCPR2L = (PORTD>>1) + 128;//Swift y ajuste de señal
             CCP2CONbits.DC2B1 = PORTDbits.RD0;
-            CCP2CONbits.DC2B0 = ADRESL>>7;}
-        
+            CCP2CONbits.DC2B0 = ADRESL>>7;}  
         PIR1bits.ADIF = 0; //Se limpia la bandera de ADC
     }
     
     if(INTCONbits.RBIF){
         if (PORTBbits.RB0 == 0){ //Primer motor DC -> izquierda
-            if (flag2){
+            if (flag2){ //Se mueve a la izquierda mientras avanza/retrocede
                 PORTA = 10;
                 __delay_ms(250);
                 PORTA = 8;
             }
-            else {
+            else { //Se mueve a la izquierda
                 PORTA = 2;
                 __delay_ms(250);
                 PORTA = 0;
@@ -336,12 +368,12 @@ void __interrupt() isr(void){
         }
         
         if(PORTBbits.RB1 == 0) { //Primer motor DC -> derecha
-            if (flag2){
+            if (flag2){//Se mueve a la derecha mientras avanza/retrocede
                 PORTA = 9;
                 __delay_ms(250);
                 PORTA = 8;
             }
-            else {
+            else { //Se mueve a la izquierda
                 PORTA = 1;
                 __delay_ms(250);
                 PORTA = 0;
@@ -350,13 +382,13 @@ void __interrupt() isr(void){
         if(PORTBbits.RB2 == 0) {//Segundo motor DC -> adelante
             PORTA = 8; 
             flag2 = 1;
-            PORTAbits.RA4 = 1;
+            PORTAbits.RA4 = 1; //Leds delanteras se encienden
             PORTAbits.RA5 = 1;
         }
         if(PORTBbits.RB3 == 0) {//Primer motor DC -> retroceso                          
            PORTA = 4; 
            flag2 = 1;
-           PORTAbits.RA6 = 1;
+           PORTAbits.RA6 = 1; //Leds traseras se encienden
            PORTAbits.RA7 = 1;       
         }
 
@@ -364,8 +396,38 @@ void __interrupt() isr(void){
             PORTA = 0; 
             flag2 = 0;      
         }
+        
+        if(PORTBbits.RB5 == 0){
+        
+            PORTD = readFromEEPROM(read_EEPROM);
+        
+            if(read_EEPROM == 0x17){
+                    read_EEPROM = 0x10;
+            }else{
+                read_EEPROM++;
+            }
+
+            CCPR1L = (PORTD>>1) + 120;//Swift y ajuste de señal
+            CCP1CONbits.DC1B1 = PORTDbits.RD0;
+            CCP1CONbits.DC1B0 = ADRESL>>7;
+
+            __delay_ms(10);
+
+            PORTD = readFromEEPROM(read_EEPROM);
+
+            if(read_EEPROM == 0x17){
+                    read_EEPROM = 0x10;
+            }else{
+                read_EEPROM++;
+            }
+
+            CCPR2L = (PORTD>>1) + 128;//Swift y ajuste de señal
+            CCP2CONbits.DC2B1 = PORTDbits.RD0;
+            CCP2CONbits.DC2B0 = ADRESL>>7;
+            __delay_ms(5000);       
+    }
    
-    INTCONbits.RBIF = 0;   
+    INTCONbits.RBIF = 0;   //Se limpia la bandera
 }
  return;   
 }
@@ -373,7 +435,7 @@ void __interrupt() isr(void){
 //------------------------------------------------------------------------------
 //                          Subrutinas
 //------------------------------------------------------------------------------
-int decimal(int val){
+uint8_t decimal(uint8_t val){ //Conversion a decimal
     if(val==0){
         return 48;
     }else if(val==1){
@@ -408,6 +470,34 @@ void String_Completo(char *var){
     TXREG = 11;
 } 
 
+void writeToEEPROM(uint8_t data, uint8_t address){
+    EEADR = address;
+    EEDAT = data;
+    EECON1bits.EEPGD = 0;
+    EECON1bits.WREN = 1;
+    
+    //deshabilitar interrupciones
+    INTCONbits.GIE = 0;
+    EECON2 = 0x55;
+    EECON2 = 0xAA;
+    
+    EECON1bits.WR = 1;
+   
+    //se termina la escritura y reenciende interrupciones
+    EECON1bits.WREN = 0; 
+    INTCONbits.GIE = 1;    
+    return;
+}
+
+
+uint8_t readFromEEPROM(uint8_t address){
+ EEADR = address; //Entra a la dirección
+ EECON1bits.EEPGD = 0;
+ EECON1bits.RD = 1;
+ uint8_t data = EEDATA; 
+ return data; //Regresa el dato almacenado
+}
+
 //------------------------------------------------------------------------------
 //                          Configuración
 //------------------------------------------------------------------------------
@@ -421,22 +511,22 @@ void setup(){
     
     //Configuraciones de entradas y salidas
     ANSELH = 0x00;//Pines digitales
-    ANSEL = 0X70; //Primeros dos pines con entradas analógicas
+    ANSEL = 0XE0; //Primeros dos pines con entradas analógicas
     
     TRISA = 0x00; //Para puente H y leds
-    TRISB = 0xFF; // habilitar pines 
+    TRISB = 0xFF; //Habilitar pines 
     TRISC = 0xB9; //Para servos
     TRISD = 0x00; 
-    TRISE = 0x03; //Para entrada de los potenciometros
+    TRISE = 0x07; //Para entrada de los potenciometros
   
-    OPTION_REGbits.nRBPU =  0 ; // se habilita el pull up interno en PORTB
-    WPUB = 0xFF;  // se habilita los pull ups para los pines RB0, RB1 y RB2
+    OPTION_REGbits.nRBPU =  0 ; //Se habilita el pull-up interno en PORTB
+    WPUB = 0xFF;  //Se habilita los pull ups para los pines
     
-    PORTA = 0x00;
-    PORTB = 0x0F; // se limpian las salidas de los puertos y valores iniciales
+    PORTA = 0x00; //Se limpian las salidas de los puertos y valores iniciales
+    PORTB = 0xFF; 
     PORTC = 0x00;    
     PORTD = 0x00;
-    PORTE = 0x00; //Se limpian los puertos    
+    PORTE = 0x00;    
     
     //Configuracion ADC
     ADCON1bits.ADFM = 0; //Justificar a la izquierda
@@ -493,11 +583,11 @@ void setup(){
     PIE1bits.ADIE = 1;   //Enable interrupción ADC
     PIR1bits.ADIF = 0;   //Se limpia bandera de interrupción ADC
        
-    PIE1bits.RCIE = 1;// modulo eusart
+    PIE1bits.RCIE = 1;// modulo EUSART
     PIR1bits.RCIF = 0;
     
     //Interrupt on change
-    IOCB = 0x0F; // setear interrupciones en los pines RB0, RB1 y RB2    
+    IOCB = 0xFF; // setear interrupciones de todos los pines   
     INTCONbits.RBIF = 0;
     
     return;

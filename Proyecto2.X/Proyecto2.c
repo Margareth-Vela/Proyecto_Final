@@ -8,7 +8,7 @@
  * módulo UART en PORTC, y potenciómetros en PORTE.
  * 
  * Creado: Mayo 22, 2021
- * Última modificación: Junio, 2021
+ * Última modificación: Junio , 2021
  */
 
 //------------------------------------------------------------------------------
@@ -197,13 +197,13 @@ void main(void) {
                             while(!opcion){}
                             if (opcion == 52){ //Primer motor DC -> izquierda
                                     PORTA = 2;
-                                    __delay_ms(250);
+                                    __delay_ms(350);
                                     PORTA = 0;                                    
                             }
 
                             if(opcion == 51) { //Primer motor DC -> derecha
                                     PORTA = 1;
-                                    __delay_ms(250);
+                                    __delay_ms(350);
                                     PORTA = 0;
                             }
                             if(opcion == 49) {//Segundo motor DC -> adelante
@@ -232,14 +232,14 @@ void main(void) {
 
                             if(opcion == 49){
                                 PORTA = 0;
-                                PORTAbits.RA4 = 1;
-                                PORTAbits.RA5 = 1;
+                                PORTAbits.RA6 = 1;
+                                __delay_ms(3000);
                                 PORTA = 0;
                             }
                             if(opcion == 50){
                                 PORTA = 0;
-                                PORTAbits.RA6 = 1;
                                 PORTAbits.RA7 = 1;
+                                __delay_ms(3000);
                                 PORTA = 0;
                             }
                             if(opcion == 51){
@@ -357,12 +357,12 @@ void __interrupt() isr(void){
         if (PORTBbits.RB0 == 0){ //Primer motor DC -> izquierda
             if (flag2){ //Se mueve a la izquierda mientras avanza/retrocede
                 PORTA = 10;
-                __delay_ms(250);
+                __delay_ms(350);
                 PORTA = 8;
             }
             else { //Se mueve a la izquierda
                 PORTA = 2;
-                __delay_ms(250);
+                __delay_ms(350);
                 PORTA = 0;
             }
         }
@@ -370,25 +370,23 @@ void __interrupt() isr(void){
         if(PORTBbits.RB1 == 0) { //Primer motor DC -> derecha
             if (flag2){//Se mueve a la derecha mientras avanza/retrocede
                 PORTA = 9;
-                __delay_ms(250);
+                __delay_ms(350);
                 PORTA = 8;
             }
             else { //Se mueve a la izquierda
                 PORTA = 1;
-                __delay_ms(250);
+                __delay_ms(350);
                 PORTA = 0;
             }
         }
         if(PORTBbits.RB2 == 0) {//Segundo motor DC -> adelante
             PORTA = 8; 
             flag2 = 1;
-            PORTAbits.RA4 = 1; //Leds delanteras se encienden
-            PORTAbits.RA5 = 1;
+            PORTAbits.RA6 = 1;
         }
         if(PORTBbits.RB3 == 0) {//Primer motor DC -> retroceso                          
            PORTA = 4; 
            flag2 = 1;
-           PORTAbits.RA6 = 1; //Leds traseras se encienden
            PORTAbits.RA7 = 1;       
         }
 

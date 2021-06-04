@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files\Microchip\xc8\v2.31\pic\dat\en_msgs.txt -cn \
   -h+dist/default/production\Proyecto2.X.production.sym \
   --cmf=dist/default/production\Proyecto2.X.production.cmf -z -Q16F887 \
-  -oC:\Users\vema3\AppData\Local\Temp\seoo.2 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Users\vema3\AppData\Local\Temp\s2qo.2 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/Proyecto2.X.production.map -E1 \
   -ver=XC8 Compiler --acfsm=1493 -ASTACK=0110h-016Fh -pstack=STACK \
   -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 \
@@ -18,7 +18,7 @@ Linker command line:
   -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
   -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
-  -pfunctab=ENTRY -k C:\Users\vema3\AppData\Local\Temp\seoo.o \
+  -pfunctab=ENTRY -k C:\Users\vema3\AppData\Local\Temp\s2qo.o \
   dist/default/production\Proyecto2.X.production.o 
 
 Object code version is 3.11
@@ -28,7 +28,7 @@ Machine type is 16F887
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\vema3\AppData\Local\Temp\seoo.o
+C:\Users\vema3\AppData\Local\Temp\s2qo.o
                 end_init                              C        C        3        8       0
                 reset_vec                             0        0        3        0       0
                 config                             2007     2007        2        0       4
@@ -36,16 +36,16 @@ dist/default/production\Proyecto2.X.production.o
                 cinit                                 F        F       2A        8       0
                 intentry                              4        4        8        8       0
                 config                             2007     2007        2        0       4
-                text9                               CD1      CD1       11     19A2       0
-                text8                               E69      E69      197     1CD2       0
-                text7                               5C8      5C8       24        8       0
-                text6                               D4E      D4E       57     1A9C       0
-                text5                               E00      E00       69     1C00       0
-                text4                               DA5      DA5       5B     1B4A       0
-                text3                               CFC      CFC       52     19F8       0
-                text2                               546      546       82        8       0
-                text1                               CE2      CE2       1A     19C4       0
-                maintext                             39       39      50D        8       0
+                text9                               CAF      CAF       11     195E       0
+                text8                               E6B      E6B      195     1CD6       0
+                text7                               CDA      CDA       24     19B4       0
+                text6                               D50      D50       57     1AA0       0
+                text5                               E02      E02       69     1C04       0
+                text4                               DA7      DA7       5B     1B4E       0
+                text3                               CFE      CFE       52     19FC       0
+                text2                               568      568       82        8       0
+                text1                               CC0      CC0       1A     1980       0
+                maintext                             39       39      52F        8       0
                 cstackBANK0                          20       20        E       20       1
                 cstackCOMMON                         70       70        8       70       1
                 dataBANK0                            3A       3A        3       20       1
@@ -53,9 +53,9 @@ dist/default/production\Proyecto2.X.production.o
                 dataCOMMON                           7A       7A        1       70       1
                 bssCOMMON                            78       78        2       70       1
                 stringtext                          600      600      210        C       0
-                strings                             5EC      5EC       12      BD8       0
-                idataBANK0                          CCE      CCE        3     199C       0
-                idataCOMMON                         5FE      5FE        1      BFC       0
+                strings                             5EA      5EA       12      BD4       0
+                idataBANK0                          5FC      5FC        3      BF8       0
+                idataCOMMON                         5FF      5FF        1      BF8       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
@@ -65,24 +65,24 @@ TOTAL           Name                               Link     Load   Length     Sp
                 cinit                                 F        F       2A         0
                 intentry                              4        4        8         0
                 reset_vec                             0        0        3         0
-                text9                               CD1      CD1       11         0
-                text8                               E69      E69      197         0
-                text7                               5C8      5C8       24         0
-                text6                               D4E      D4E       57         0
-                text5                               E00      E00       69         0
-                text4                               DA5      DA5       5B         0
-                text3                               CFC      CFC       52         0
-                text2                               546      546       82         0
-                text1                               CE2      CE2       1A         0
-                maintext                             39       39      50D         0
-                idataBANK0                          CCE      CCE        3         0
-                idataCOMMON                         5FE      5FE        1         0
+                text9                               CAF      CAF       11         0
+                text8                               E6B      E6B      195         0
+                text7                               CDA      CDA       24         0
+                text6                               D50      D50       57         0
+                text5                               E02      E02       69         0
+                text4                               DA7      DA7       5B         0
+                text3                               CFE      CFE       52         0
+                text2                               568      568       82         0
+                text1                               CC0      CC0       1A         0
+                maintext                             39       39      52F         0
+                idataBANK0                          5FC      5FC        3         0
+                idataCOMMON                         5FF      5FF        1         0
 
         CLASS   STRCODE        
                 stringtext                          600      600      210         0
 
         CLASS   STRING         
-                strings                             5EC      5EC       12         0
+                strings                             5EA      5EA       12         0
 
         CLASS   CONST          
 
@@ -129,20 +129,20 @@ TOTAL           Name                               Link     Load   Length     Sp
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
                 reset_vec                      000000  000003  000003         0       0  CODE        2
-                intentry                       000004  0005E8  0005EC         8       0  CODE        2
+                intentry                       000004  0005E6  0005EA         8       0  CODE        2
                 cstackBANK0                    000020  00001D  00003D        20       1  BANK0       1
                 cstackCOMMON                   000070  00000B  00007B        70       1  COMMON      1
-                strings                        0005EC  000012  0005FE       BD8       0  STRING      2
-                idataCOMMON                    0005FE  000001  0005FF       BFC       0  CODE        2
+                strings                        0005EA  000012  0005FC       BD4       0  STRING      2
+                idataBANK0                     0005FC  000004  000600       BF8       0  CODE        2
                 stringtext                     000600  000210  000810         C       0  STRCODE     2
-                idataBANK0                     000CCE  000003  000CD1      199C       0  CODE        2
-                text9                          000CD1  000011  000CE2      19A2       0  CODE        2
-                text1                          000CE2  00001A  000CFC      19C4       0  CODE        2
-                text3                          000CFC  000052  000D4E      19F8       0  CODE        2
-                text6                          000D4E  000057  000DA5      1A9C       0  CODE        2
-                text4                          000DA5  00005B  000E00      1B4A       0  CODE        2
-                text5                          000E00  000069  000E69      1C00       0  CODE        2
-                text8                          000E69  000197  001000      1CD2       0  CODE        2
+                text9                          000CAF  000011  000CC0      195E       0  CODE        2
+                text1                          000CC0  00001A  000CDA      1980       0  CODE        2
+                text7                          000CDA  000024  000CFE      19B4       0  CODE        2
+                text3                          000CFE  000052  000D50      19FC       0  CODE        2
+                text6                          000D50  000057  000DA7      1AA0       0  CODE        2
+                text4                          000DA7  00005B  000E02      1B4E       0  CODE        2
+                text5                          000E02  000069  000E6B      1C04       0  CODE        2
+                text8                          000E6B  000195  001000      1CD6       0  CODE        2
 
 
 UNUSED ADDRESS RANGES
@@ -153,18 +153,15 @@ UNUSED ADDRESS RANGES
         BANK2            0110-016F             60           1
         BANK3            0190-01EF             60           1
         CODE             0003-0003              1           2
-                         05FF-05FF              1
-                         0810-0CCD            4BE
+                         0810-0CAE            49F
                          1000-1FFF            800
         COMMON           007B-007D              3           1
         CONST            0003-0003              1           2
-                         05FF-05FF              1
-                         0810-0CCD            100
+                         0810-0CAE            100
                          1000-1FFF            100
         EEDATA           2100-21FF            100           2
         ENTRY            0003-0003              1           2
-                         05FF-05FF              1
-                         0810-0CCD            100
+                         0810-0CAE            100
                          1000-1FFF            100
         IDLOC            2000-2003              4           2
         RAM              003D-006F             33           1
@@ -177,12 +174,10 @@ UNUSED ADDRESS RANGES
         SFR3             0180-018F             10           1
         STACK            0110-016F             60           1
         STRCODE          0003-0003              1           2
-                         05FF-05FF              1
-                         0810-0CCD            4BE
+                         0810-0CAE            49F
                          1000-1FFF           1000
         STRING           0003-0003              1           2
-                         05FF-05FF              1
-                         0810-0CCD            100
+                         0810-0CAE            100
                          1000-1FFF            100
 
                                   Symbol Table
@@ -228,7 +223,7 @@ _RCREG                    (abs)        001A
 _RCSTAbits                (abs)        0018
 _SPBRG                    (abs)        0099
 _SPBRGH                   (abs)        009A
-_String_Completo          text6        0D4E
+_String_Completo          text6        0D50
 _T2CONbits                (abs)        0012
 _TRISA                    (abs)        0085
 _TRISB                    (abs)        0086
@@ -322,13 +317,13 @@ __S0                      (abs)        1000
 __S1                      (abs)        007B
 __S2                      (abs)        0000
 __S3                      (abs)        0000
-___awdiv                  text5        0E00
+___awdiv                  text5        0E02
 ___awdiv@counter          cstackBANK0  0025
 ___awdiv@dividend         cstackBANK0  0022
 ___awdiv@divisor          cstackBANK0  0020
 ___awdiv@quotient         cstackBANK0  0027
 ___awdiv@sign             cstackBANK0  0026
-___awmod                  text4        0DA5
+___awmod                  text4        0DA7
 ___awmod@counter          cstackBANK0  0025
 ___awmod@dividend         cstackBANK0  0022
 ___awmod@divisor          cstackBANK0  0020
@@ -338,18 +333,18 @@ ___latbits                (abs)        0002
 ___sp                     stack        0000
 ___stackhi                (abs)        0000
 ___stacklo                (abs)        0000
-__end_of_String_Completo  text6        0DA5
-__end_of___awdiv          text5        0E69
-__end_of___awmod          text4        0E00
+__end_of_String_Completo  text6        0DA7
+__end_of___awdiv          text5        0E6B
+__end_of___awmod          text4        0E02
 __end_of__initialization  cinit        0035
-__end_of__stringtab       strings      05FE
-__end_of_decimal          text3        0D4E
+__end_of__stringtab       strings      05FC
+__end_of_decimal          text3        0D50
 __end_of_isr              text8        1000
-__end_of_main             maintext     0546
-__end_of_readFromEEPROM   text9        0CE2
-__end_of_setup            text2        05C8
-__end_of_strlen           text7        05EC
-__end_of_writeToEEPROM    text1        0CFC
+__end_of_main             maintext     0568
+__end_of_readFromEEPROM   text9        0CC0
+__end_of_setup            text2        05EA
+__end_of_strlen           text7        0CFE
+__end_of_writeToEEPROM    text1        0CDA
 __initialization          cinit        000F
 __pbssBANK0               bssBANK0     002E
 __pbssCOMMON              bssCOMMON    0078
@@ -357,21 +352,21 @@ __pcstackBANK0            cstackBANK0  0020
 __pcstackCOMMON           cstackCOMMON 0070
 __pdataBANK0              dataBANK0    003A
 __pdataCOMMON             dataCOMMON   007A
-__pidataBANK0             idataBANK0   0CCE
-__pidataCOMMON            idataCOMMON  05FE
+__pidataBANK0             idataBANK0   05FC
+__pidataCOMMON            idataCOMMON  05FF
 __pintentry               intentry     0004
 __pmaintext               maintext     0039
-__pstrings                strings      05EC
+__pstrings                strings      05EA
 __pstringtext             stringtext   0600
-__ptext1                  text1        0CE2
-__ptext2                  text2        0546
-__ptext3                  text3        0CFC
-__ptext4                  text4        0DA5
-__ptext5                  text5        0E00
-__ptext6                  text6        0D4E
-__ptext7                  text7        05C8
-__ptext8                  text8        0E69
-__ptext9                  text9        0CD1
+__ptext1                  text1        0CC0
+__ptext2                  text2        0568
+__ptext3                  text3        0CFE
+__ptext4                  text4        0DA7
+__ptext5                  text5        0E02
+__ptext6                  text6        0D50
+__ptext7                  text7        0CDA
+__ptext8                  text8        0E6B
+__ptext9                  text9        0CAF
 __size_of_String_Completo (abs)        0000
 __size_of___awdiv         (abs)        0000
 __size_of___awmod         (abs)        0000
@@ -382,29 +377,29 @@ __size_of_readFromEEPROM  (abs)        0000
 __size_of_setup           (abs)        0000
 __size_of_strlen          (abs)        0000
 __size_of_writeToEEPROM   (abs)        0000
-__stringbase              strings      05FE
-__stringtab               strings      05EC
+__stringbase              strings      05FC
+__stringtab               strings      05EA
 _addressEEPROM            dataBANK0    003C
 _centenas                 bssBANK0     0034
 _decenas                  bssBANK0     0033
 _decenas_temp             bssBANK0     0032
-_decimal                  text3        0CFC
+_decimal                  text3        0CFE
 _eepromVal                bssBANK0     0030
 _flag                     dataBANK0    003A
 _flag2                    bssCOMMON    0078
-_isr                      text8        0E69
+_isr                      text8        0E6B
 _main                     maintext     0039
 _opcion                   bssBANK0     0039
-_readFromEEPROM           text9        0CD1
+_readFromEEPROM           text9        0CAF
 _read_EEPROM              dataCOMMON   007A
-_setup                    text2        0546
-_strlen                   text7        05C8
+_setup                    text2        0568
+_strlen                   text7        0CDA
 _temp_posicion1           bssBANK0     0038
 _temp_posicion2           bssBANK0     0037
 _unidades                 bssBANK0     0031
 _valor_pot                bssBANK0     0036
 _var_temp                 bssBANK0     0035
-_writeToEEPROM            text1        0CE2
+_writeToEEPROM            text1        0CC0
 btemp                     (abs)        007E
 decimal@val               cstackBANK0  0020
 end_of_initialization     cinit        0035
@@ -466,7 +461,7 @@ Total ram usage:        3 bytes
 
  *************** function _writeToEEPROM *****************
  Defined at:
-		line 473 in file "Proyecto2.c"
+		line 471 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   data            1    wreg     unsigned char 
   address         1    0[BANK0 ] unsigned char 
@@ -497,7 +492,7 @@ Total ram usage:        2 bytes
 
  *************** function _setup *****************
  Defined at:
-		line 504 in file "Proyecto2.c"
+		line 502 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -527,7 +522,7 @@ Total ram usage:        1 bytes
 
  *************** function _decimal *****************
  Defined at:
-		line 438 in file "Proyecto2.c"
+		line 436 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   val             1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -622,7 +617,7 @@ Total ram usage:        9 bytes
 
  *************** function _String_Completo *****************
  Defined at:
-		line 462 in file "Proyecto2.c"
+		line 460 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   var             2    4[BANK0 ] PTR unsigned char 
 		 -> STR_26(50), STR_25(25), STR_24(13), STR_23(28), 
@@ -733,7 +728,7 @@ Total ram usage:        5 bytes
 
  *************** function _readFromEEPROM *****************
  Defined at:
-		line 493 in file "Proyecto2.c"
+		line 491 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   address         1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -766,34 +761,34 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awmod.c
-		___awmod       		CODE           	0DA5	0000	91
+		___awmod       		CODE           	0DA7	0000	91
 
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awmod.c estimated size: 91
 
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awdiv.c
-		___awdiv       		CODE           	0E00	0000	105
+		___awdiv       		CODE           	0E02	0000	105
 
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awdiv.c estimated size: 105
 
 shared
-		__stringtab    		STRING         	05EC	0000	18
+		__stringtab    		STRING         	05EA	0000	18
 		__initialization		CODE           	000F	0000	38
 
 shared estimated size: 56
 
 Proyecto2.c
-		_decimal       		CODE           	0CFC	0000	82
-		_writeToEEPROM 		CODE           	0CE2	0000	26
-		_readFromEEPROM		CODE           	0CD1	0000	17
-		_main          		CODE           	0039	0000	1293
-		_isr           		CODE           	0E69	0000	407
-		_String_Completo		CODE           	0D4E	0000	87
-		_setup         		CODE           	0546	0000	130
+		_decimal       		CODE           	0CFE	0000	82
+		_writeToEEPROM 		CODE           	0CC0	0000	26
+		_readFromEEPROM		CODE           	0CAF	0000	17
+		_main          		CODE           	0039	0000	1327
+		_isr           		CODE           	0E6B	0000	405
+		_String_Completo		CODE           	0D50	0000	87
+		_setup         		CODE           	0568	0000	130
 
-Proyecto2.c estimated size: 2042
+Proyecto2.c estimated size: 2074
 
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\strlen.c
-		_strlen        		CODE           	05C8	0000	36
+		_strlen        		CODE           	0CDA	0000	36
 
 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\strlen.c estimated size: 36
 

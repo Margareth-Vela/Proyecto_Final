@@ -2847,13 +2847,13 @@ void main(void) {
                             while(!opcion){}
                             if (opcion == 52){
                                     PORTA = 2;
-                                    _delay((unsigned long)((250)*(8000000/4000.0)));
+                                    _delay((unsigned long)((350)*(8000000/4000.0)));
                                     PORTA = 0;
                             }
 
                             if(opcion == 51) {
                                     PORTA = 1;
-                                    _delay((unsigned long)((250)*(8000000/4000.0)));
+                                    _delay((unsigned long)((350)*(8000000/4000.0)));
                                     PORTA = 0;
                             }
                             if(opcion == 49) {
@@ -2882,14 +2882,14 @@ void main(void) {
 
                             if(opcion == 49){
                                 PORTA = 0;
-                                PORTAbits.RA4 = 1;
-                                PORTAbits.RA5 = 1;
+                                PORTAbits.RA6 = 1;
+                                _delay((unsigned long)((3000)*(8000000/4000.0)));
                                 PORTA = 0;
                             }
                             if(opcion == 50){
                                 PORTA = 0;
-                                PORTAbits.RA6 = 1;
                                 PORTAbits.RA7 = 1;
+                                _delay((unsigned long)((3000)*(8000000/4000.0)));
                                 PORTA = 0;
                             }
                             if(opcion == 51){
@@ -3007,12 +3007,12 @@ void __attribute__((picinterrupt(("")))) isr(void){
         if (PORTBbits.RB0 == 0){
             if (flag2){
                 PORTA = 10;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
+                _delay((unsigned long)((350)*(8000000/4000.0)));
                 PORTA = 8;
             }
             else {
                 PORTA = 2;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
+                _delay((unsigned long)((350)*(8000000/4000.0)));
                 PORTA = 0;
             }
         }
@@ -3020,25 +3020,23 @@ void __attribute__((picinterrupt(("")))) isr(void){
         if(PORTBbits.RB1 == 0) {
             if (flag2){
                 PORTA = 9;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
+                _delay((unsigned long)((350)*(8000000/4000.0)));
                 PORTA = 8;
             }
             else {
                 PORTA = 1;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
+                _delay((unsigned long)((350)*(8000000/4000.0)));
                 PORTA = 0;
             }
         }
         if(PORTBbits.RB2 == 0) {
             PORTA = 8;
             flag2 = 1;
-            PORTAbits.RA4 = 1;
-            PORTAbits.RA5 = 1;
+            PORTAbits.RA6 = 1;
         }
         if(PORTBbits.RB3 == 0) {
            PORTA = 4;
            flag2 = 1;
-           PORTAbits.RA6 = 1;
            PORTAbits.RA7 = 1;
         }
 

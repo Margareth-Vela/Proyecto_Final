@@ -17,19 +17,19 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"89 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
+"88 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _main main `(v  1 e 1 0 ]
-"332
+"331
 [v _isr isr `II(v  1 e 1 0 ]
-"435
+"434
 [v _decimal decimal `(uc  1 e 1 0 ]
-"459
+"458
 [v _String_Completo String_Completo `(v  1 e 1 0 ]
-"470
+"469
 [v _writeToEEPROM writeToEEPROM `(v  1 e 1 0 ]
-"490
+"489
 [v _readFromEEPROM readFromEEPROM `(uc  1 e 1 0 ]
-"501
+"500
 [v _setup setup `(v  1 e 1 0 ]
 "166 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
@@ -332,62 +332,62 @@
 [v _EECON1bits EECON1bits `VES300  1 e 1 @396 ]
 "3544
 [v _EECON2 EECON2 `VEuc  1 e 1 @397 ]
-"61 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
+"60 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _flag2 flag2 `i  1 e 2 0 ]
-"62
+"61
 [v _flag flag `i  1 e 2 0 ]
-"63
+"62
 [v _opcion opcion `uc  1 e 1 0 ]
-"64
+"63
 [v _temp_posicion1 temp_posicion1 `uc  1 e 1 0 ]
-"65
+"64
 [v _temp_posicion2 temp_posicion2 `uc  1 e 1 0 ]
-"66
+"65
 [v _valor_pot valor_pot `uc  1 e 1 0 ]
-"67
+"66
 [v _var_temp var_temp `uc  1 e 1 0 ]
-"68
+"67
 [v _centenas centenas `uc  1 e 1 0 ]
-"69
+"68
 [v _decenas decenas `uc  1 e 1 0 ]
-"70
+"69
 [v _decenas_temp decenas_temp `uc  1 e 1 0 ]
-"71
+"70
 [v _unidades unidades `uc  1 e 1 0 ]
-"72
+"71
 [v _RB3_old RB3_old `i  1 e 2 0 ]
-"73
+"72
 [v _read_EEPROM read_EEPROM `uc  1 e 1 0 ]
-"74
+"73
 [v _eepromVal eepromVal `uc  1 e 1 0 ]
-"75
+"74
 [v _addressEEPROM addressEEPROM `uc  1 e 1 0 ]
-"89
+"88
 [v _main main `(v  1 e 1 0 ]
 {
-"327
+"326
 } 0
-"470
+"469
 [v _writeToEEPROM writeToEEPROM `(v  1 e 1 0 ]
 {
 [v writeToEEPROM@data data `uc  1 a 1 wreg ]
 [v writeToEEPROM@data data `uc  1 a 1 wreg ]
 [v writeToEEPROM@address address `uc  1 p 1 0 ]
 [v writeToEEPROM@data data `uc  1 a 1 1 ]
-"487
+"486
 } 0
-"501
+"500
 [v _setup setup `(v  1 e 1 0 ]
 {
-"591
+"590
 } 0
-"435
+"434
 [v _decimal decimal `(uc  1 e 1 0 ]
 {
 [v decimal@val val `uc  1 a 1 wreg ]
 [v decimal@val val `uc  1 a 1 wreg ]
 [v decimal@val val `uc  1 a 1 0 ]
-"457
+"456
 } 0
 "5 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
@@ -413,14 +413,14 @@
 [v ___awdiv@dividend dividend `i  1 p 2 2 ]
 "41
 } 0
-"459 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
+"458 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _String_Completo String_Completo `(v  1 e 1 0 ]
 {
-"460
-[v String_Completo@i i `i  1 a 2 9 ]
 "459
+[v String_Completo@i i `i  1 a 2 9 ]
+"458
 [v String_Completo@var var `*.25uc  1 p 2 4 ]
-"468
+"467
 } 0
 "4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
@@ -431,19 +431,19 @@
 [v strlen@s s `*.25DCuc  1 p 2 0 ]
 "13
 } 0
-"332 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
+"331 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"430
+"429
 } 0
-"490
+"489
 [v _readFromEEPROM readFromEEPROM `(uc  1 e 1 0 ]
 {
 [v readFromEEPROM@address address `uc  1 a 1 wreg ]
-"494
+"493
 [v readFromEEPROM@data data `uc  1 a 1 2 ]
-"490
+"489
 [v readFromEEPROM@address address `uc  1 a 1 wreg ]
 [v readFromEEPROM@address address `uc  1 a 1 1 ]
-"496
+"495
 } 0

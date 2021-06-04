@@ -2677,7 +2677,7 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 # 19 "Proyecto2.c" 2
-# 31 "Proyecto2.c"
+# 30 "Proyecto2.c"
 #pragma config FOSC = INTRC_NOCLKOUT
 
 

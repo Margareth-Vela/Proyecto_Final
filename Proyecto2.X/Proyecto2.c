@@ -17,7 +17,6 @@
 #include <xc.h>
 #include <string.h>
 #include <stdint.h>
-#include <pic16f887.h>
 
 //------------------------------------------------------------------------------
 //                          Directivas del compilador

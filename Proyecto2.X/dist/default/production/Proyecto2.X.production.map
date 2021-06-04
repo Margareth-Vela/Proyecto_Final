@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files\Microchip\xc8\v2.31\pic\dat\en_msgs.txt -cn \
   -h+dist/default/production\Proyecto2.X.production.sym \
   --cmf=dist/default/production\Proyecto2.X.production.cmf -z -Q16F887 \
-  -oC:\Users\vema3\AppData\Local\Temp\sd64.2 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Users\vema3\AppData\Local\Temp\sdec.2 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/Proyecto2.X.production.map -E1 \
   -ver=XC8 Compiler --acfsm=1493 -ASTACK=0110h-016Fh -pstack=STACK \
   -ACODE=00h-07FFhx4 -ASTRCODE=00h-01FFFh -ASTRING=00h-0FFhx32 \
@@ -18,7 +18,7 @@ Linker command line:
   -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
   -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
-  -pfunctab=ENTRY -k C:\Users\vema3\AppData\Local\Temp\sd64.o \
+  -pfunctab=ENTRY -k C:\Users\vema3\AppData\Local\Temp\sdec.o \
   dist/default/production\Proyecto2.X.production.o 
 
 Object code version is 3.11
@@ -28,7 +28,7 @@ Machine type is 16F887
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\vema3\AppData\Local\Temp\sd64.o
+C:\Users\vema3\AppData\Local\Temp\sdec.o
                 end_init                              C        C        3        8       0
                 reset_vec                             0        0        3        0       0
                 config                             2007     2007        2        0       4
@@ -427,7 +427,7 @@ FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 89 in file "Proyecto2.c"
+		line 88 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -461,7 +461,7 @@ Total ram usage:        3 bytes
 
  *************** function _writeToEEPROM *****************
  Defined at:
-		line 470 in file "Proyecto2.c"
+		line 469 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   data            1    wreg     unsigned char 
   address         1    0[BANK0 ] unsigned char 
@@ -492,7 +492,7 @@ Total ram usage:        2 bytes
 
  *************** function _setup *****************
  Defined at:
-		line 501 in file "Proyecto2.c"
+		line 500 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -522,7 +522,7 @@ Total ram usage:        1 bytes
 
  *************** function _decimal *****************
  Defined at:
-		line 435 in file "Proyecto2.c"
+		line 434 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   val             1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -617,7 +617,7 @@ Total ram usage:        9 bytes
 
  *************** function _String_Completo *****************
  Defined at:
-		line 459 in file "Proyecto2.c"
+		line 458 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   var             2    4[BANK0 ] PTR unsigned char 
 		 -> STR_26(50), STR_25(25), STR_24(13), STR_23(28), 
@@ -698,7 +698,7 @@ Total ram usage:        4 bytes
 
  *************** function _isr *****************
  Defined at:
-		line 332 in file "Proyecto2.c"
+		line 331 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -728,7 +728,7 @@ Total ram usage:        5 bytes
 
  *************** function _readFromEEPROM *****************
  Defined at:
-		line 490 in file "Proyecto2.c"
+		line 489 in file "Proyecto2.c"
  Parameters:    Size  Location     Type
   address         1    wreg     unsigned char 
  Auto vars:     Size  Location     Type

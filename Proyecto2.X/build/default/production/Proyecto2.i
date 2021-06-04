@@ -3048,7 +3048,6 @@ void __attribute__((picinterrupt(("")))) isr(void){
         if(PORTBbits.RB5 == 0){
 
             PORTD = readFromEEPROM(read_EEPROM);
-
             if(read_EEPROM == 0x17){
                     read_EEPROM = 0x10;
             }else{
@@ -3061,8 +3060,8 @@ void __attribute__((picinterrupt(("")))) isr(void){
 
             _delay((unsigned long)((10)*(8000000/4000.0)));
 
-            PORTD = readFromEEPROM(read_EEPROM);
 
+            PORTD = readFromEEPROM(read_EEPROM);
             if(read_EEPROM == 0x17){
                     read_EEPROM = 0x10;
             }else{

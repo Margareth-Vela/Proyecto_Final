@@ -21,15 +21,15 @@
 [v _main main `(v  1 e 1 0 ]
 "332
 [v _isr isr `II(v  1 e 1 0 ]
-"436
+"435
 [v _decimal decimal `(uc  1 e 1 0 ]
-"460
+"459
 [v _String_Completo String_Completo `(v  1 e 1 0 ]
-"471
+"470
 [v _writeToEEPROM writeToEEPROM `(v  1 e 1 0 ]
-"491
+"490
 [v _readFromEEPROM readFromEEPROM `(uc  1 e 1 0 ]
-"502
+"501
 [v _setup setup `(v  1 e 1 0 ]
 "166 C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f887.h
 [v _PORTA PORTA `VEuc  1 e 1 @5 ]
@@ -367,27 +367,27 @@
 {
 "327
 } 0
-"471
+"470
 [v _writeToEEPROM writeToEEPROM `(v  1 e 1 0 ]
 {
 [v writeToEEPROM@data data `uc  1 a 1 wreg ]
 [v writeToEEPROM@data data `uc  1 a 1 wreg ]
 [v writeToEEPROM@address address `uc  1 p 1 0 ]
 [v writeToEEPROM@data data `uc  1 a 1 1 ]
-"488
+"487
 } 0
-"502
+"501
 [v _setup setup `(v  1 e 1 0 ]
 {
-"592
+"591
 } 0
-"436
+"435
 [v _decimal decimal `(uc  1 e 1 0 ]
 {
 [v decimal@val val `uc  1 a 1 wreg ]
 [v decimal@val val `uc  1 a 1 wreg ]
 [v decimal@val val `uc  1 a 1 0 ]
-"458
+"457
 } 0
 "5 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
@@ -413,14 +413,14 @@
 [v ___awdiv@dividend dividend `i  1 p 2 2 ]
 "41
 } 0
-"460 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
+"459 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _String_Completo String_Completo `(v  1 e 1 0 ]
 {
-"461
-[v String_Completo@i i `i  1 a 2 9 ]
 "460
+[v String_Completo@i i `i  1 a 2 9 ]
+"459
 [v String_Completo@var var `*.25uc  1 p 2 4 ]
-"469
+"468
 } 0
 "4 C:\Program Files\Microchip\xc8\v2.31\pic\sources\c90\common\strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
@@ -434,16 +434,16 @@
 "332 C:\Users\vema3\OneDrive\Documents\GitHub\Proyecto_Final\Proyecto2.X\Proyecto2.c
 [v _isr isr `II(v  1 e 1 0 ]
 {
-"431
+"430
 } 0
-"491
+"490
 [v _readFromEEPROM readFromEEPROM `(uc  1 e 1 0 ]
 {
 [v readFromEEPROM@address address `uc  1 a 1 wreg ]
-"495
+"494
 [v readFromEEPROM@data data `uc  1 a 1 2 ]
-"491
+"490
 [v readFromEEPROM@address address `uc  1 a 1 wreg ]
 [v readFromEEPROM@address address `uc  1 a 1 1 ]
-"497
+"496
 } 0

@@ -8,7 +8,7 @@
  * módulo UART en PORTC, y potenciómetros en PORTE.
  * 
  * Creado: Mayo 22, 2021
- * Última modificación: Junio , 2021
+ * Última modificación: Junio 04, 2021
  */
 
 //------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void main(void) {
         
         //Módulo EUSART
         if (PIR1bits.TXIF){     
-            if(flag){ //Menu para entrar al modo control USART
+            if(flag){ //Menú para entrar al modo control USART
                 String_Completo("Si desea ingresar a modo control USART presione 1");
                 flag = 0;
             }
@@ -232,18 +232,18 @@ void main(void) {
 
                             if(opcion == 49){
                                 PORTA = 0;
-                                PORTAbits.RA6 = 1;
+                                PORTAbits.RA6 = 1; //Se encienden las luces delanteras
                                 __delay_ms(3000);
                                 PORTA = 0;
                             }
                             if(opcion == 50){
                                 PORTA = 0;
-                                PORTAbits.RA7 = 1;
+                                PORTAbits.RA7 = 1; //Se encienden las luces traseras
                                 __delay_ms(3000);
                                 PORTA = 0;
                             }
                             if(opcion == 51){
-                                PORTA = 0xF0;
+                                PORTA = 0xF0; //Parpadeo
                                 __delay_ms(500);
                                 PORTA = 0;
                                 __delay_ms(500);
@@ -278,7 +278,7 @@ void main(void) {
                             unidades = var_temp%10;//El residuo se almacena en unidades 
 
                             String_Completo("Valor del potenciometro:");
-                            TXREG = decimal(centenas);
+                            TXREG = decimal(centenas); //Se convierte el valor a decimal
                             __delay_ms(10);
                             TXREG = decimal(decenas);
                             __delay_ms(10);
@@ -293,7 +293,7 @@ void main(void) {
                         } 
                     }
 
-                    if(opcion==53){
+                    if(opcion==53){//Sale del modo control USART
                        String_Completo("Si desea ingresar a modo control USART presione 1");
                        flag = 0;
                     }   
@@ -396,29 +396,28 @@ void __interrupt() isr(void){
         }
         
         if(PORTBbits.RB5 == 0){
-        
-            PORTD = readFromEEPROM(read_EEPROM);
-        
-            if(read_EEPROM == 0x17){
+            
+            PORTD = readFromEEPROM(read_EEPROM); //Lee el valor de la dirección en la EEPROM       
+            if(read_EEPROM == 0x17){ //Valor máximo de lectura en la dirección 0x17
                     read_EEPROM = 0x10;
             }else{
-                read_EEPROM++;
+                read_EEPROM++;//Incrementa la dirección
             }
-
+            //El primer servo se coloca en la posición guardada
             CCPR1L = (PORTD>>1) + 120;//Swift y ajuste de señal
             CCP1CONbits.DC1B1 = PORTDbits.RD0;
             CCP1CONbits.DC1B0 = ADRESL>>7;
 
             __delay_ms(10);
-
+            
+            //Lee el valor de la dirección en la EEPROM
             PORTD = readFromEEPROM(read_EEPROM);
-
-            if(read_EEPROM == 0x17){
+            if(read_EEPROM == 0x17){ //Valor máximo de lectura en la dirección 0x17
                     read_EEPROM = 0x10;
             }else{
-                read_EEPROM++;
+                read_EEPROM++; //Incrementa la dirección
             }
-
+            //El segundo servo se coloca en la posición guardada
             CCPR2L = (PORTD>>1) + 128;//Swift y ajuste de señal
             CCP2CONbits.DC2B1 = PORTDbits.RD0;
             CCP2CONbits.DC2B0 = ADRESL>>7;
@@ -469,17 +468,17 @@ void String_Completo(char *var){
 } 
 
 void writeToEEPROM(uint8_t data, uint8_t address){
-    EEADR = address;
-    EEDAT = data;
-    EECON1bits.EEPGD = 0;
-    EECON1bits.WREN = 1;
+    EEADR = address; //Se guarda en la dirección deseada
+    EEDAT = data; //Se guarda el dato deseado
+    EECON1bits.EEPGD = 0; //Entra a la memoria de programa
+    EECON1bits.WREN = 1; //Bit de escritura encendido
     
     //deshabilitar interrupciones
     INTCONbits.GIE = 0;
-    EECON2 = 0x55;
+    EECON2 = 0x55; //Secuencia requerida para escribir en EEPROM
     EECON2 = 0xAA;
     
-    EECON1bits.WR = 1;
+    EECON1bits.WR = 1; //Inicia ciclo de escritura
    
     //se termina la escritura y reenciende interrupciones
     EECON1bits.WREN = 0; 
@@ -490,9 +489,9 @@ void writeToEEPROM(uint8_t data, uint8_t address){
 
 uint8_t readFromEEPROM(uint8_t address){
  EEADR = address; //Entra a la dirección
- EECON1bits.EEPGD = 0;
- EECON1bits.RD = 1;
- uint8_t data = EEDATA; 
+ EECON1bits.EEPGD = 0; //Entra a la memoria de datos
+ EECON1bits.RD = 1; //Inicia ciclo de lectura
+ uint8_t data = EEDATA; //Se guarda el valor del dato 
  return data; //Regresa el dato almacenado
 }
 

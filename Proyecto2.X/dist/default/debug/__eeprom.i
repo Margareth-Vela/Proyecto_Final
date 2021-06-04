@@ -1,4 +1,4 @@
-# 1 "Proyecto2.c"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\sources\\c90\\pic\\__eeprom.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "Proyecto2.c" 2
-# 17 "Proyecto2.c"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\sources\\c90\\pic\\__eeprom.c" 2
 # 1 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -2488,533 +2487,176 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 17 "Proyecto2.c" 2
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\sources\\c90\\pic\\__eeprom.c" 2
 
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 1 3
 
 
 
+void
+__eecpymem(volatile unsigned char *to, __eeprom unsigned char * from, unsigned char size)
+{
+ volatile unsigned char *cp = to;
 
+ while (EECON1bits.WR) continue;
+ EEADR = (unsigned char)from;
+ while(size--) {
+  while (EECON1bits.WR) continue;
 
-# 1 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\__size_t.h" 1 3
+  EECON1 &= 0x7F;
 
-
-
-typedef unsigned size_t;
-# 6 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 2 3
-
-# 1 "C:/Program Files/Microchip/MPLABX/v5.45/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\__null.h" 1 3
-# 7 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 2 3
-
-
-
-
-
-
-
-extern void * memcpy(void *, const void *, size_t);
-extern void * memmove(void *, const void *, size_t);
-extern void * memset(void *, int, size_t);
-# 36 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\include\\c90\\string.h" 3
-extern char * strcat(char *, const char *);
-extern char * strcpy(char *, const char *);
-extern char * strncat(char *, const char *, size_t);
-extern char * strncpy(char *, const char *, size_t);
-extern char * strdup(const char *);
-extern char * strtok(char *, const char *);
-
-
-extern int memcmp(const void *, const void *, size_t);
-extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
-extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
-extern void * memchr(const void *, int, size_t);
-extern size_t strcspn(const char *, const char *);
-extern char * strpbrk(const char *, const char *);
-extern size_t strspn(const char *, const char *);
-extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
-extern char * strerror(int);
-extern size_t strlen(const char *);
-extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
-extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
-# 18 "Proyecto2.c" 2
-# 30 "Proyecto2.c"
-#pragma config FOSC = INTRC_NOCLKOUT
-
-
-#pragma config WDTE = OFF
-
-#pragma config PWRTE = ON
-#pragma config MCLRE = OFF
-
-
-#pragma config CP = OFF
-
-#pragma config CPD = OFF
-
-#pragma config BOREN = OFF
-#pragma config IESO = OFF
-
-#pragma config FCMEN = OFF
-
-#pragma config LVP = OFF
-
-
-
-#pragma config BOR4V = BOR40V
-
-#pragma config WRT = OFF
-
-
-
-
-
-int flag2 = 0;
-int flag = 1;
-unsigned char opcion=0;
-unsigned char temp_posicion1;
-unsigned char temp_posicion2;
-unsigned char leer_EEPROM = 0x10;
-int valor_pot;
-int var_temp;
-int centenas;
-int decenas;
-int decenas_temp;
-int unidades;
-int RB3_old;
-int eepromVal;
-int addressEEPROM = 0x10;
-int parpadear = 0;
-
-
-
-
-void setup(void);
-void String_Completo(char *var);
-void writeToEEPROM(int data, int address);
-int decimal(int val);
-
-
-
-
-void main(void) {
-    setup();
-    ADCON0bits.GO = 1;
-
-    while(1)
-    {
-
-        if(ADCON0bits.GO == 0){
-            if (ADCON0bits.CHS == 5){
-                ADCON0bits.CHS = 6;}
-            else if (ADCON0bits.CHS == 6){
-                ADCON0bits.CHS = 5;}
-            else if (ADCON0bits.CHS == 7){
-                ADCON0bits.CHS = 5;}
-            _delay((unsigned long)((50)*(8000000/4000000.0)));
-            ADCON0bits.GO = 1;
-        }
-
-
-        if (PIR1bits.TXIF){
-
-            if(flag){
-                String_Completo("Si desea ingresar a modo control USART presione 1");
-                flag = 0;
-            }
-
-            if(opcion == 49){
-                flag = 1;
-                opcion = 0;
-                    while(opcion != 53){
-
-                        if(flag){
-                            String_Completo("Que accion desea ejecutar?");
-                            String_Completo("(1)Controlar Grua");
-                            String_Completo("(2)Controlar Carro");
-                            String_Completo("(3)Controlar Luces");
-                            String_Completo("(4)Mostrar valor del potenciometro");
-                            String_Completo("(5)Salir de control por USART");
-                            flag = 0;
-                        }
-                        if(opcion==49){
-                            String_Completo("Elija la posicion del primer servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
-                            flag = 1;
-                            opcion = 0;
-
-                            while(!opcion){}
-
-                            if(opcion==49){
-                                PORTD = 0;
-                                CCPR1L = (PORTD>>1) + 128;
-                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
-                                CCP1CONbits.DC1B0 = ADRESL>>7;
-                            }
-                            if(opcion==50){
-                                PORTD = 128;
-                                CCPR1L = (PORTD>>1) + 128;
-                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
-                                CCP1CONbits.DC1B0 = ADRESL>>7;
-                            }
-                            if(opcion==51){
-                                PORTD = 255;
-                                CCPR1L = (PORTD>>1) + 120;
-                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
-                                CCP1CONbits.DC1B0 = ADRESL>>7;
-                            }
-
-                            String_Completo("Elija la posicion del segundo servo:");
-                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
-                            flag = 1;
-                            opcion = 0;
-
-                            while(!opcion){}
-
-                            if(opcion==49){
-                                PORTD = 0;
-                                CCPR2L = (PORTD>>1) + 128;
-                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
-                                CCP2CONbits.DC2B0 = ADRESL>>7;
-                            }
-                            if(opcion==50){
-                                PORTD = 128;
-                                CCPR2L = (PORTD>>1) + 128;
-                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
-                                CCP2CONbits.DC2B0 = ADRESL>>7;
-                            }
-                            if(opcion==51){
-                                PORTD = 255;
-                                CCPR2L = (PORTD>>1) + 128;
-                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
-                                CCP2CONbits.DC2B0 = ADRESL>>7;
-                            }
-                            opcion = 0;
-                        }
-
-                        if(opcion==50){
-                            String_Completo("Elija una de las siguientes acciones:");
-                            String_Completo("(1) Avanzar");
-                            String_Completo("(2) Retroceder");
-                            String_Completo("(3) Girar a la derecha");
-                            String_Completo("(4) Girar a la izquierda");
-
-                            flag = 1;
-                            opcion = 0;
-
-                            while(!opcion){}
-                            if (opcion == 52){
-                                    PORTA = 2;
-                                    _delay((unsigned long)((250)*(8000000/4000.0)));
-                                    PORTA = 0;
-                            }
-
-                            if(opcion == 51) {
-                                    PORTA = 1;
-                                    _delay((unsigned long)((250)*(8000000/4000.0)));
-                                    PORTA = 0;
-                            }
-                            if(opcion == 49) {
-                                PORTA = 8;
-                                _delay((unsigned long)((5000)*(8000000/4000.0)));
-                                PORTA = 0;
-                            }
-                            if(opcion == 50) {
-                               PORTA = 4;
-                               _delay((unsigned long)((5000)*(8000000/4000.0)));
-                               PORTA = 0;
-                            }
-                            opcion = 0;
-                        }
-
-                        if (opcion==51){
-                            String_Completo("Elija una de las siguientes acciones:");
-                            String_Completo("(1) Encender luces delanteras");
-                            String_Completo("(2) Encender luces traseras");
-                            String_Completo("(3) Parpadeo");
-
-                            flag = 1;
-                            opcion = 0;
-
-                            while(!opcion){}
-
-                            if(opcion == 49){
-                                PORTA = 0;
-                                PORTAbits.RA4 = 1;
-                                PORTAbits.RA5 = 1;
-                            }
-                            if(opcion == 50){
-                                PORTA = 0;
-                                PORTAbits.RA6 = 1;
-                                PORTAbits.RA7 = 1;
-                            }
-                            if(opcion == 51){
-                                PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
-                                PORTA = 0;
-                                PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
-                                PORTA = 0;
-                                PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
-                                PORTA = 0;
-                                PORTA = 0xF0;
-                                _delay((unsigned long)((2000)*(8000000/4000.0)));
-                                PORTA = 0;
-                            }
-                            opcion = 0;
-                        }
-
-                        if (opcion==52){
-                            flag = 1;
-                            ADCON0bits.CHS = 7;
-                            _delay((unsigned long)((50)*(8000000/4000000.0)));
-                            ADCON0bits.GO = 1;
-                            _delay((unsigned long)((50)*(8000000/4000000.0)));
-                            valor_pot = ADRESH;
-                            _delay((unsigned long)((50)*(8000000/4000000.0)));
-
-                            var_temp = valor_pot;
-                            centenas = var_temp/100;
-                            decenas_temp = var_temp%100;
-                            decenas = decenas_temp/10;
-                            unidades = var_temp%10;
-
-                            String_Completo("El valor en decimal del pot es:");
-                            TXREG = decimal(centenas);
-                            _delay((unsigned long)((10)*(8000000/4000.0)));
-                            TXREG = decimal(decenas);
-                            _delay((unsigned long)((10)*(8000000/4000.0)));
-                            TXREG = decimal(unidades);
-                            _delay((unsigned long)((10)*(8000000/4000.0)));
-
-                            TXREG = 13;
-                            _delay((unsigned long)((10)*(8000000/4000.0)));
-                            TXREG = 11;
-
-                            opcion = 0;
-                        }
-                    }
-
-                    if(opcion==53){
-                       String_Completo("Ingrese 1 si desea ingresar a modo control USART");
-                       flag = 0;
-                    }
-                }
-        }
-
-    return;
-}
+  EECON1bits.RD = 1;
+  *cp++ = EEDATA;
+  ++EEADR;
+ }
+# 36 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\sources\\c90\\pic\\__eeprom.c"
 }
 
+void
+__memcpyee(__eeprom unsigned char * to, const unsigned char *from, unsigned char size)
+{
+ const unsigned char *ptr =from;
 
+ while (EECON1bits.WR) continue;
+ EEADR = (unsigned char)to - 1U;
 
+ EECON1 &= 0x7F;
 
-void __attribute__((picinterrupt(("")))) isr(void){
-
-    if (PIR1bits.RCIF){
-        opcion = RCREG;
-    }
-
-    if (PIR1bits.ADIF){
-
-        if(ADCON0bits.CHS == 5) {
-            PORTD = ADRESH;
-            CCPR1L = (PORTD>>1) + 128;
-            CCP1CONbits.DC1B1 = PORTDbits.RD0;
-            CCP1CONbits.DC1B0 = ADRESL>>7;}
-
-        else{
-            PORTD = ADRESH;
-            CCPR2L = (PORTD>>1) + 128;
-            CCP2CONbits.DC2B1 = PORTDbits.RD0;
-            CCP2CONbits.DC2B0 = ADRESL>>7;}
-
-        PIR1bits.ADIF = 0;
-    }
-
-    if(INTCONbits.RBIF){
-        if (PORTBbits.RB0 == 0){
-            if (flag2){
-                PORTA = 10;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
-                PORTA = 8;
-            }
-            else {
-                PORTA = 2;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
-                PORTA = 0;
-            }
-        }
-
-        if(PORTBbits.RB1 == 0) {
-            if (flag2){
-                PORTA = 9;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
-                PORTA = 8;
-            }
-            else {
-                PORTA = 1;
-                _delay((unsigned long)((250)*(8000000/4000.0)));
-                PORTA = 0;
-            }
-        }
-        if(PORTBbits.RB2 == 0) {
-            PORTA = 8;
-            flag2 = 1;
-            PORTAbits.RA4 = 1;
-            PORTAbits.RA5 = 1;
-        }
-        if(PORTBbits.RB3 == 0) {
-           PORTA = 4;
-           flag2 = 1;
-           PORTAbits.RA6 = 1;
-           PORTAbits.RA7 = 1;
-        }
-
-        if(PORTBbits.RB3 == 1 && PORTBbits.RB2 == 1) {
-            PORTA = 0;
-            flag2 = 0;
-        }
-
-    INTCONbits.RBIF = 0;
-}
- return;
+ while(size--) {
+  while (EECON1bits.WR) {
+   continue;
+  }
+  EEDATA = *ptr++;
+  ++EEADR;
+  STATUSbits.CARRY = 0;
+  if (INTCONbits.GIE) {
+   STATUSbits.CARRY = 1;
+  }
+  INTCONbits.GIE = 0;
+  EECON1bits.WREN = 1;
+  EECON2 = 0x55;
+  EECON2 = 0xAA;
+  EECON1bits.WR = 1;
+  EECON1bits.WREN = 0;
+  if (STATUSbits.CARRY) {
+   INTCONbits.GIE = 1;
+  }
+ }
+# 101 "C:\\Program Files\\Microchip\\xc8\\v2.31\\pic\\sources\\c90\\pic\\__eeprom.c"
 }
 
-
-
-
-int decimal(int val){
-    if(val==0){
-        return 48;
-    }else if(val==1){
-        return 49;
-    }else if(val==2){
-        return 50;
-    }else if(val==3){
-        return 51;
-    }else if(val==4){
-        return 52;
-    }else if(val==5){
-        return 53;
-    }else if(val==6){
-        return 54;
-    }else if(val==7){
-        return 55;
-    }else if(val==8){
-        return 56;
-    }else if(val==9){
-        return 57;
-    }
+unsigned char
+__eetoc(__eeprom void *addr)
+{
+ unsigned char data;
+ __eecpymem((unsigned char *) &data,addr,1);
+ return data;
 }
 
-void String_Completo(char *var){
-    int i;
-    for (i = 0; i < strlen(var); i++) {
-         _delay((unsigned long)((10)*(8000000/4000.0)));
-        TXREG = var[i];
-    }
-    TXREG = 13;
-    _delay((unsigned long)((10)*(8000000/4000.0)));
-    TXREG = 11;
+unsigned int
+__eetoi(__eeprom void *addr)
+{
+ unsigned int data;
+ __eecpymem((unsigned char *) &data,addr,2);
+ return data;
 }
 
+#pragma warning push
+#pragma warning disable 2040
+__uint24
+__eetom(__eeprom void *addr)
+{
+ __uint24 data;
+ __eecpymem((unsigned char *) &data,addr,3);
+ return data;
+}
+#pragma warning pop
 
+unsigned long
+__eetol(__eeprom void *addr)
+{
+ unsigned long data;
+ __eecpymem((unsigned char *) &data,addr,4);
+ return data;
+}
 
+#pragma warning push
+#pragma warning disable 1516
+unsigned long long
+__eetoo(__eeprom void *addr)
+{
+ unsigned long long data;
+ __eecpymem((unsigned char *) &data,addr,8);
+ return data;
+}
+#pragma warning pop
 
-void setup(){
+unsigned char
+__ctoee(__eeprom void *addr, unsigned char data)
+{
+ __memcpyee(addr,(unsigned char *) &data,1);
+ return data;
+}
 
+unsigned int
+__itoee(__eeprom void *addr, unsigned int data)
+{
+ __memcpyee(addr,(unsigned char *) &data,2);
+ return data;
+}
 
-    OSCCONbits.IRCF2 =1 ;
-    OSCCONbits.IRCF1 =1 ;
-    OSCCONbits.IRCF0 =1 ;
-    OSCCONbits.SCS = 1;
+#pragma warning push
+#pragma warning disable 2040
+__uint24
+__mtoee(__eeprom void *addr, __uint24 data)
+{
+ __memcpyee(addr,(unsigned char *) &data,3);
+ return data;
+}
+#pragma warning pop
 
+unsigned long
+__ltoee(__eeprom void *addr, unsigned long data)
+{
+ __memcpyee(addr,(unsigned char *) &data,4);
+ return data;
+}
 
-    ANSELH = 0x00;
-    ANSEL = 0X70;
+#pragma warning push
+#pragma warning disable 1516
+unsigned long long
+__otoee(__eeprom void *addr, unsigned long long data)
+{
+ __memcpyee(addr,(unsigned char *) &data,8);
+ return data;
+}
+#pragma warning pop
 
-    TRISA = 0x00;
-    TRISB = 0xFF;
-    TRISC = 0xB9;
-    TRISD = 0x00;
-    TRISE = 0x03;
+float
+__eetoft(__eeprom void *addr)
+{
+ float data;
+ __eecpymem((unsigned char *) &data,addr,3);
+ return data;
+}
 
-    OPTION_REGbits.nRBPU = 0 ;
-    WPUB = 0xFF;
+double
+__eetofl(__eeprom void *addr)
+{
+ double data;
+ __eecpymem((unsigned char *) &data,addr,4);
+ return data;
+}
 
-    PORTA = 0x00;
-    PORTB = 0x0F;
-    PORTC = 0x00;
-    PORTD = 0x00;
-    PORTE = 0x00;
+float
+__fttoee(__eeprom void *addr, float data)
+{
+ __memcpyee(addr,(unsigned char *) &data,3);
+ return data;
+}
 
-
-    ADCON1bits.ADFM = 0;
-    ADCON1bits.VCFG0 = 0;
-    ADCON1bits.VCFG1 = 0;
-
-    ADCON0bits.ADCS = 0b10;
-    ADCON0bits.CHS = 5;
-    _delay((unsigned long)((50)*(8000000/4000000.0)));
-    ADCON0bits.ADON = 1;
-
-
-    PR2 = 250;
-    CCP1CONbits.P1M = 0;
-    CCP1CONbits.CCP1M = 0b00001100;
-    CCP2CONbits.CCP2M = 0b00001100;
-
-    CCPR1L = 0x0F;
-    CCPR2L = 0x0F;
-    CCP1CONbits.DC1B = 0;
-    CCP2CONbits.DC2B1 = 0;
-    CCP2CONbits.DC2B0 = 0;
-
-    PIR1bits.TMR2IF = 0;
-    T2CONbits.T2CKPS1 = 1;
-    T2CONbits.T2CKPS0 = 1;
-    T2CONbits.TMR2ON = 1;
-
-    while (!PIR1bits.TMR2IF);
-    PIR1bits.TMR2IF = 0;
-
-
-    TXSTAbits.SYNC = 0;
-    TXSTAbits.BRGH = 1;
-
-    BAUDCTLbits.BRG16 = 1;
-
-    SPBRG = 207;
-    SPBRGH = 0;
-
-    RCSTAbits.SPEN = 1;
-    RCSTAbits.RX9 = 0;
-    RCSTAbits.CREN = 1;
-
-    TXSTAbits.TXEN = 1;
-
-
-    INTCONbits.GIE = 1;
-
-    INTCONbits.RBIE = 1;
-    INTCONbits.RBIF = 0;
-
-    INTCONbits.PEIE = 1;
-    PIE1bits.ADIE = 1;
-    PIR1bits.ADIF = 0;
-
-    PIE1bits.RCIE = 1;
-    PIR1bits.RCIF = 0;
-
-
-    IOCB = 0x0F;
-    INTCONbits.RBIF = 0;
-
-    return;
+double
+__fltoee(__eeprom void *addr, double data)
+{
+ __memcpyee(addr,(unsigned char *) &data,4);
+ return data;
 }

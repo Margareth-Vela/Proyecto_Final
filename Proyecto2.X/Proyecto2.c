@@ -57,24 +57,30 @@
 //------------------------------------------------------------------------------
 //                          Variables
 //------------------------------------------------------------------------------
-int flag2=0;
-const char data = 97; //constante valor a
+int flag2 = 0;
 int flag = 1; //bandera de menu con valor inicial 1
-char texto[11]; //texto de opcion 1
 unsigned char opcion=0; // opcion ingresada por el usuario
-
+unsigned char temp_posicion1;
+unsigned char temp_posicion2;
+unsigned char leer_EEPROM = 0x10;
+int valor_pot;
+int var_temp;
+int centenas;
+int decenas;
+int decenas_temp;
+int unidades;
 int RB3_old;
-int eepromVal = 0;
-
+int eepromVal;
 int addressEEPROM = 0x10;
 int parpadear = 0;
 
 //------------------------------------------------------------------------------
 //                          Prototipos
 //------------------------------------------------------------------------------
-void setup();
-void showString(char *var);// funcion para cadena de strings
+void setup(void);
+void String_Completo(char *var);// funcion para cadena de strings
 void writeToEEPROM(int data, int address);
+int decimal(int val);
 
 //------------------------------------------------------------------------------
 //                          Código Principal
@@ -84,7 +90,207 @@ void main(void) {
     ADCON0bits.GO = 1; //La conversión ADC se ejecuta
     
     while(1)
-    {
+    { 
+        //Módulo ADC
+        if(ADCON0bits.GO == 0){ //Si la conversión ya está terminada
+            if (ADCON0bits.CHS == 5){ //Si está en el primer canal,
+                ADCON0bits.CHS = 6;}  //pasa al segundo canal
+            else if (ADCON0bits.CHS == 6){ //Si está en el segundo canal,
+                ADCON0bits.CHS = 5;}  //pasa al primer canal
+            else if (ADCON0bits.CHS == 7){ //Si está en el tercer canal,
+                ADCON0bits.CHS = 5;}  //pasa al primer canal
+            __delay_us(50); //Delay para el capacitor sample/hold
+            ADCON0bits.GO = 1; //Se vuelve a ejecutar la conversión ADC
+        }
+        
+        //Módulo EUSART
+        if (PIR1bits.TXIF){
+            
+            if(flag){
+                String_Completo("Si desea ingresar a modo control USART presione 1");
+                flag = 0;
+            }
+            
+            if(opcion == 49){
+                flag = 1;
+                opcion = 0;
+                    while(opcion != 53){
+
+                        if(flag){ // si la bandera esta encendida mostrara el menu
+                            String_Completo("Que accion desea ejecutar?");
+                            String_Completo("(1)Controlar Grua");
+                            String_Completo("(2)Controlar Carro");
+                            String_Completo("(3)Controlar Luces");
+                            String_Completo("(4)Mostrar valor del potenciometro");
+                            String_Completo("(5)Salir de control por USART");
+                            flag = 0;
+                        }
+                        if(opcion==49){ // cuando seleccione opcion 1 mostrara el texto 
+                            String_Completo("Elija la posicion del primer servo:");
+                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            flag = 1;
+                            opcion = 0;
+
+                            while(!opcion){}
+
+                            if(opcion==49){
+                                PORTD = 0;
+                                CCPR1L = (PORTD>>1) + 128; //Swift y ajuste de señal
+                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
+                                CCP1CONbits.DC1B0 = ADRESL>>7;
+                            }
+                            if(opcion==50){
+                                PORTD = 128;
+                                CCPR1L = (PORTD>>1) + 128; //Swift y ajuste de señal
+                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
+                                CCP1CONbits.DC1B0 = ADRESL>>7;
+                            }
+                            if(opcion==51){
+                                PORTD = 255;
+                                CCPR1L = (PORTD>>1) + 120; //Swift y ajuste de señal
+                                CCP1CONbits.DC1B1 = PORTDbits.RD0;
+                                CCP1CONbits.DC1B0 = ADRESL>>7;
+                            }
+
+                            String_Completo("Elija la posicion del segundo servo:");
+                            String_Completo("Ingrese: (1) 0grados (2)90grados (3)180grados");
+                            flag = 1;
+                            opcion = 0;
+
+                            while(!opcion){}
+
+                            if(opcion==49){
+                                PORTD = 0;
+                                CCPR2L = (PORTD>>1) + 128; //Swift y ajuste de señal
+                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
+                                CCP2CONbits.DC2B0 = ADRESL>>7;
+                            }
+                            if(opcion==50){
+                                PORTD = 128;
+                                CCPR2L = (PORTD>>1) + 128; //Swift y ajuste de señal
+                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
+                                CCP2CONbits.DC2B0 = ADRESL>>7;
+                            }
+                            if(opcion==51){
+                                PORTD = 255;
+                                CCPR2L = (PORTD>>1) + 128; //Swift y ajuste de señal
+                                CCP2CONbits.DC2B1 = PORTDbits.RD0;
+                                CCP2CONbits.DC2B0 = ADRESL>>7;
+                            }
+                            opcion = 0;
+                        }
+                        
+                        if(opcion==50){ // Controlar carro
+                            String_Completo("Elija una de las siguientes acciones:");
+                            String_Completo("(1) Avanzar");
+                            String_Completo("(2) Retroceder");
+                            String_Completo("(3) Girar a la derecha");
+                            String_Completo("(4) Girar a la izquierda");
+
+                            flag = 1;
+                            opcion = 0;
+
+                            while(!opcion){}
+                            if (opcion == 52){ //Primer motor DC -> izquierda
+                                    PORTA = 2;
+                                    __delay_ms(250);
+                                    PORTA = 0;                                    
+                            }
+        
+                            if(opcion == 51) { //Primer motor DC -> derecha
+                                    PORTA = 1;
+                                    __delay_ms(250);
+                                    PORTA = 0;
+                            }
+                            if(opcion == 49) {//Segundo motor DC -> adelante
+                                PORTA = 8; 
+                                __delay_ms(3000);
+                                PORTA = 0;
+                            }
+                            if(opcion == 50) {//Primer motor DC -> retroceso                          
+                               PORTA = 4; 
+                               __delay_ms(3000);
+                               PORTA = 0;      
+                            }                          
+                            opcion = 0;
+                        }
+                        
+                        if (opcion==51){ //Controlar luces
+                            String_Completo("Elija una de las siguientes acciones:");
+                            String_Completo("(1) Encender luces delanteras");
+                            String_Completo("(2) Encender luces traseras");
+                            String_Completo("(3) Parpadeo");
+
+                            flag = 1;
+                            opcion = 0;
+
+                            while(!opcion){}
+                            
+                            if(opcion == 49){
+                                PORTA = 0;
+                                PORTAbits.RA4 = 1;
+                                PORTAbits.RA5 = 1;
+                            }
+                            if(opcion == 50){
+                                PORTA = 0;
+                                PORTAbits.RA6 = 1;
+                                PORTAbits.RA7 = 1;
+                            }
+                            if(opcion == 51){
+                                PORTA = 0xF0;
+                                __delay_ms(2000);
+                                PORTA = 0;
+                                PORTA = 0xF0;
+                                __delay_ms(2000);
+                                PORTA = 0;
+                                PORTA = 0xF0;
+                                __delay_ms(2000);
+                                PORTA = 0;
+                                PORTA = 0xF0;
+                                __delay_ms(2000);
+                                PORTA = 0;
+                            }      
+                            opcion = 0;
+                        } 
+
+                        if (opcion==52){ //Muestra el valor del POT3
+                            flag = 1;                           
+                            ADCON0bits.CHS = 7;
+                            __delay_us(50);
+                            ADCON0bits.GO = 1; //Se vuelve a ejecutar la conversión ADC
+                            __delay_us(50); //Delay para el capacitor sample/hold
+                            valor_pot = ADRESH;
+                            __delay_us(50);
+                            
+                            var_temp = valor_pot;
+                            centenas = var_temp/100; //Se divide por 100 para obtener las centenas
+                            decenas_temp = var_temp%100;//El residuo se almacena en la variable temporal de decenas
+                            decenas = decenas_temp/10;//Se divide en 10 el valor de decenas_temp 
+                            unidades = var_temp%10;//El residuo se almacena en unidades 
+                            
+                            String_Completo("El valor en decimal del pot es:");
+                            TXREG = decimal(centenas);
+                            __delay_ms(10);
+                            TXREG = decimal(decenas);
+                            __delay_ms(10);
+                            TXREG = decimal(unidades);
+                            __delay_ms(10);
+                            
+                            TXREG = 13;
+                            __delay_ms(10);
+                            TXREG = 11;
+                            
+                            opcion = 0;
+                        } 
+                    }
+                    
+                    if(opcion==53){
+                       String_Completo("Ingrese 1 si desea ingresar a modo control USART");
+                       flag = 0;
+                    }   
+                }          
+        }
+    
     return;
 }
 }
@@ -164,7 +370,47 @@ void __interrupt() isr(void){
  return;   
 }
 
+//------------------------------------------------------------------------------
+//                          Subrutinas
+//------------------------------------------------------------------------------
+int decimal(int val){
+    if(val==0){
+        return 48;
+    }else if(val==1){
+        return 49;
+    }else if(val==2){
+        return 50;
+    }else if(val==3){
+        return 51;
+    }else if(val==4){
+        return 52;
+    }else if(val==5){
+        return 53;
+    }else if(val==6){
+        return 54;
+    }else if(val==7){
+        return 55;
+    }else if(val==8){
+        return 56;
+    }else if(val==9){
+        return 57;
+    }
+}
 
+void String_Completo(char *var){
+    int i;   
+    for (i = 0; i < strlen(var); i++) {
+         __delay_ms(10); 
+        TXREG = var[i]; //Se transmite caracter por caracter en la terminal
+    }
+    TXREG = 13; //Agrega una nueva línea
+    __delay_ms(10);
+    TXREG = 11;
+} 
+
+//------------------------------------------------------------------------------
+//                          Configuración
+//------------------------------------------------------------------------------
 void setup(){
     
     //Configuraciones de reloj
@@ -255,17 +501,4 @@ void setup(){
     INTCONbits.RBIF = 0;
     
     return;
-}
-
-void showString(char *var){ //subrutina de formacion de cadena de caracteres
-    int i;
-       
-    for (i = 0; i < strlen(var); i++) { //bucle en donde lee el array de char y
-        TXREG = var[i]; //lo mueve a la consola
-        __delay_ms(5);
-    }
-    
-    TXREG = 13;
-    __delay_ms(5);
-    TXREG = 11;
 }

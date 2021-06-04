@@ -2720,12 +2720,12 @@ void main(void) {
                             }
                             if(opcion == 49) {
                                 PORTA = 8;
-                                _delay((unsigned long)((5000)*(8000000/4000.0)));
+                                _delay((unsigned long)((3000)*(8000000/4000.0)));
                                 PORTA = 0;
                             }
                             if(opcion == 50) {
                                PORTA = 4;
-                               _delay((unsigned long)((5000)*(8000000/4000.0)));
+                               _delay((unsigned long)((3000)*(8000000/4000.0)));
                                PORTA = 0;
                             }
                             opcion = 0;

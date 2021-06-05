@@ -298,7 +298,8 @@ void main(void) {
                     }   
                 }         
         }
-    
+        
+        //Módulo EEPROM
         if (PORTBbits.RB4 == 0){ //Funciona para antirebote
             RB3_old = 1;
         }
